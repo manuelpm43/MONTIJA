@@ -1,8 +1,8 @@
-# PROYECTO PRESAS
+# PROYECTO BIDELAN
 
 ## Objetivo
 
-Desarrollar una aplicación web para la gestión técnica de presas utilizando la API-IDEE.
+Desarrollar un visor web para la consulta de puntos kilométricos de carreteras (capa `bidelan:pk_v0`) utilizando la API-IDEE, con datos servidos desde GeoServer (WMS + WFS).
 
 ---
 
@@ -20,7 +20,7 @@ La aplicación estará formada por cinco bloques principales:
 
 # Estructura del proyecto
 
-PRESAS/
+BIDELAN/
 
 ├── css/
 
@@ -50,11 +50,9 @@ Todo en minúsculas.
 
 Ejemplo:
 
-presas.geojson
+pk_v0.geojson
 
-rios.geojson
-
-cuencas.geojson
+tramos.geojson
 
 ---
 
@@ -66,9 +64,9 @@ Ejemplo:
 
 const mapa
 
-const capaPresas
+const capaPKv0
 
-const capaRios
+const geoserverWfsUrl
 
 ---
 
@@ -92,15 +90,13 @@ Finalmente probar.
 
 # Versiones
 
-v0.1 Primer visor
+v1.0 Limpieza del esqueleto PRESAS y adaptación del buscador a tramos/PK
 
-v0.2 WMS
+v1.1 Capa WMS bidelan:pk_v0
 
-v0.3 Arquitectura
+v1.2 Checkbox de visibilidad
 
-v0.4 Interfaz
-
-v0.5 GeoJSON
+v1.3 Panel de información vía WFS al hacer click
 
 ---
 

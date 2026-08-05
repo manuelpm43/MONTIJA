@@ -1,16 +1,16 @@
 const inputBuscador = document.getElementById("buscador");
 const panelSugerencias = document.getElementById("sugerencias");
 
-let datosPresas = [];
+let datosPK = [];
 
 
-/* Carga de datos para el buscador */
-fetch("datos/geojson/puntos/presas.geojson")
+/* Carga de datos para el buscador (coordenadas ya reproyectadas a EPSG:3857) */
+fetch(`${geoserverWfsUrl}?service=WFS&version=2.0.0&request=GetFeature&typeNames=bidelan:pk_v0&outputFormat=application/json&srsName=EPSG:3857`)
     .then(function (respuesta) {
 
         if (!respuesta.ok) {
             throw new Error(
-                `No se pudo cargar el GeoJSON: ${respuesta.status}`
+                `No se pudo cargar el WFS: ${respuesta.status}`
             );
         }
 
@@ -18,18 +18,18 @@ fetch("datos/geojson/puntos/presas.geojson")
     })
     .then(function (geojson) {
 
-        datosPresas = geojson.features;
+        datosPK = geojson.features;
 
         console.log(
-            "Presas disponibles en el buscador:",
-            datosPresas
+            "Puntos kilométricos disponibles en el buscador:",
+            datosPK
         );
 
     })
     .catch(function (error) {
 
         console.error(
-            "Error al cargar las presas:",
+            "Error al cargar los puntos kilométricos:",
             error
         );
 
@@ -50,14 +50,14 @@ inputBuscador.addEventListener("input", function () {
         return;
     }
 
-    const resultados = datosPresas
-        .filter(function (presa) {
+    const resultados = datosPK
+        .filter(function (tramo) {
 
-            const nombre = normalizarTexto(
-                presa.properties.NOMBRE ?? ""
+            const etiqueta = normalizarTexto(
+                textoEtiquetaTramo(tramo.properties)
             );
 
-            return nombre.includes(textoBuscado);
+            return etiqueta.includes(textoBuscado);
 
         })
         .slice(0, 8);
@@ -66,7 +66,7 @@ inputBuscador.addEventListener("input", function () {
 
         panelSugerencias.innerHTML = `
             <div class="sugerencia-vacia">
-                No se encontraron presas
+                No se encontraron puntos kilométricos
             </div>
         `;
 
@@ -74,18 +74,17 @@ inputBuscador.addEventListener("input", function () {
         return;
     }
 
-    resultados.forEach(function (presa) {
+    resultados.forEach(function (tramo) {
 
         const elemento = document.createElement("button");
 
         elemento.type = "button";
-        elemento.className = "sugerencia-presa";
-        elemento.textContent =
-            presa.properties.NOMBRE ?? "Sin nombre";
+        elemento.className = "sugerencia-pk";
+        elemento.textContent = textoEtiquetaTramo(tramo.properties);
 
         elemento.addEventListener("click", function () {
 
-            seleccionarPresa(presa);
+            seleccionarTramo(tramo);
 
         });
 
@@ -118,26 +117,26 @@ inputBuscador.addEventListener("keydown", function (evento) {
         return;
     }
 
-    const presaEncontrada = datosPresas.find(
-        function (presa) {
+    const tramoEncontrado = datosPK.find(
+        function (tramo) {
 
-            const nombre = normalizarTexto(
-                presa.properties.NOMBRE ?? ""
+            const etiqueta = normalizarTexto(
+                textoEtiquetaTramo(tramo.properties)
             );
 
-            return nombre.includes(textoBuscado);
+            return etiqueta.includes(textoBuscado);
 
         }
     );
 
-    if (!presaEncontrada) {
+    if (!tramoEncontrado) {
         alert(
-            "No se ha encontrado ninguna presa con ese nombre."
+            "No se ha encontrado ningún punto kilométrico con ese criterio."
         );
         return;
     }
 
-    seleccionarPresa(presaEncontrada);
+    seleccionarTramo(tramoEncontrado);
 
 });
 
@@ -156,31 +155,27 @@ document.addEventListener("click", function (evento) {
 });
 
 
-function seleccionarPresa(presa) {
+function seleccionarTramo(tramo) {
 
-    const atributos = presa.properties;
+    const atributos = tramo.properties;
 
-    const longitud =
-        presa.geometry.coordinates[0];
+    const coordenadas = tramo.geometry.coordinates;
 
-    const latitud =
-        presa.geometry.coordinates[1];
+    mapa.setCenter(coordenadas);
+    mapa.setZoom(16);
 
-    const coordenadasWebMercator =
-        convertirAWEBMercator(
-            longitud,
-            latitud
-        );
+    mostrarInfoPK(atributos);
 
-    mapa.setCenter(coordenadasWebMercator);
-    mapa.setZoom(14);
-
-    mostrarFichaPresa(atributos);
-
-    inputBuscador.value =
-        atributos.NOMBRE ?? "";
+    inputBuscador.value = textoEtiquetaTramo(atributos);
 
     ocultarSugerencias();
+
+}
+
+
+function textoEtiquetaTramo(atributos) {
+
+    return `${atributos.CARRETERA ?? "?"} · PK ${atributos.PK ?? "?"}`;
 
 }
 
@@ -202,31 +197,5 @@ function normalizarTexto(texto) {
         .toUpperCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
-
-}
-
-
-function convertirAWEBMercator(longitud, latitud) {
-
-    const radioTierra = 6378137;
-
-    const x =
-        radioTierra *
-        longitud *
-        Math.PI /
-        180;
-
-    const y =
-        radioTierra *
-        Math.log(
-            Math.tan(
-                Math.PI / 4 +
-                latitud *
-                Math.PI /
-                360
-            )
-        );
-
-    return [x, y];
 
 }

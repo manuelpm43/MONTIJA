@@ -31,66 +31,111 @@ const mapa = IDEE.map({
 });
 console.log(mapa);
 
+// Servicio GeoServer del proyecto BIDELAN
+const geoserverWfsUrl = "http://217.71.202.62:8080/geoserver/bidelan/ows";
 
-
-const provincias = new IDEE.layer.WMS({
-    url: "https://www.ign.es/wms-inspire/unidades-administrativas?",
-    name: "AU.AdministrativeUnit",
-    legend: "Provincias"
+const capaPKv0 = new IDEE.layer.WMS({
+    url: "http://217.71.202.62:8080/geoserver/bidelan/wms",
+    name: "bidelan:pk_v0",
+    legend: "Puntos kilométricos",
+    useCapabilities: false
+}, {
+    crossOrigin: null
 });
-mapa.addLayers(provincias);
+mapa.addLayers(capaPKv0);
 
-const capaPresas = new IDEE.layer.GeoJSON({
+mapa.on("click", function (evento) {
 
-    url: "datos/geojson/puntos/presas.geojson",
+    const coordenadas = evento.coord;
+    const resolucion = evento.vendor.map.getView().getResolution();
 
-    name: "Presas",
+    consultarPKv0(coordenadas, resolucion);
 
-    extract: false,
-
-
-
-});
-
-mapa.addLayers(capaPresas);
-
-// Estilo SVG para las presas
-const estiloPresas = new IDEE.style.Generic({
-    point: {
-        icon: {
-            src: "img/presa.svg",
-            scale: 1
-        }
-    }
 });
 
-capaPresas.setStyle(estiloPresas);
 
-mapa.on("click", function(evento) {
+/**
+ * Consulta por WFS el punto kilométrico más cercano a unas coordenadas,
+ * dentro de una tolerancia en píxeles, y muestra su ficha en el panel.
+ *
+ * @param {Array<number>} coordenadas - Coordenadas del click, en la proyección del mapa.
+ * @param {number} resolucion - Resolución actual del mapa (unidades de mapa por píxel).
+ */
+function consultarPKv0(coordenadas, resolucion) {
 
-    const pixel = evento.pixel;
-    const mapaOL = evento.vendor.map;
+    const toleranciaPixeles = 6;
+    const buffer = resolucion * toleranciaPixeles;
 
-    let encontrada = false;
+    const bbox = [
+        coordenadas[0] - buffer,
+        coordenadas[1] - buffer,
+        coordenadas[0] + buffer,
+        coordenadas[1] + buffer
+    ].join(",");
 
-    mapaOL.forEachFeatureAtPixel(pixel, function(feature) {
+    const url = `${geoserverWfsUrl}?service=WFS&version=2.0.0&request=GetFeature&typeNames=bidelan:pk_v0&outputFormat=application/json&srsName=EPSG:3857&bbox=${bbox},EPSG:3857`;
 
-        encontrada = true;
+    fetch(url)
+        .then(function (respuesta) {
 
-        console.log("FEATURE:", feature);
-        console.log("PROPIEDADES:", feature.getProperties());
+            if (!respuesta.ok) {
+                throw new Error(
+                    `No se pudo consultar el WFS: ${respuesta.status}`
+                );
+            }
 
-        const propiedades = feature.getProperties();
+            return respuesta.json();
+        })
+        .then(function (geojson) {
 
-        delete propiedades.geometry;
+            if (geojson.features.length === 0) {
+                console.log("No hay punto kilométrico en este punto");
+                return;
+            }
 
-        mostrarFichaPresa(propiedades);
+            const featureMasCercana = featureMasCercanaA(
+                coordenadas,
+                geojson.features
+            );
+
+            mostrarInfoPK(featureMasCercana.properties);
+
+        })
+        .catch(function (error) {
+
+            console.error("Error al consultar el punto kilométrico:", error);
+
+        });
+
+}
+
+
+function featureMasCercanaA(coordenadas, features) {
+
+    return features.reduce(function (masCercana, actual) {
+
+        const distanciaActual = distanciaEntrePuntos(
+            coordenadas,
+            actual.geometry.coordinates
+        );
+
+        const distanciaMasCercana = distanciaEntrePuntos(
+            coordenadas,
+            masCercana.geometry.coordinates
+        );
+
+        return distanciaActual < distanciaMasCercana ? actual : masCercana;
 
     });
 
-    if (!encontrada) {
-        console.log("No hay presa en este punto");
-    }
+}
 
-});
 
+function distanciaEntrePuntos(a, b) {
+
+    const dx = a[0] - b[0];
+    const dy = a[1] - b[1];
+
+    return Math.sqrt(dx * dx + dy * dy);
+
+}

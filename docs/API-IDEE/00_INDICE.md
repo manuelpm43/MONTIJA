@@ -1,17 +1,17 @@
 # Índice de funcionalidades API-IDEE
 
-| Nº | Funcionalidad | Estado | Usado en PRESAS |
+| Nº | Funcionalidad | Estado | Usado en BIDELAN |
 |----|---------------|:------:|:---------------:|
 |01|Visualizador Base|✅|✅|
 |02|Configuración inicial|✅|✅|
 |03|Controles|⬜|⬜|
-|04|GeoJSON|✅|✅|
+|04|GeoJSON|✅|⬜|
 |05|WMS|✅|✅|
 |06|WMTS|✅|✅|
 |07|BackImgLayer|✅|✅|
 |08|Popup personalizado|✅|✅|
 |09|Buscador|✅|✅|
-|10|WFS|⬜|⬜|
+|10|WFS|✅|✅|
 |11|OGC API Features|⬜|⬜|
 |12|StoryMap|⬜|⬜|
 |13|Filtros|⬜|⬜|

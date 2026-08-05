@@ -17,24 +17,24 @@
 
     <!-- CABECERA -->
     <section id="logo">
-        <div class="logo-icono">🏞️</div>
+        <div class="logo-icono">🛣️</div>
 
         <div>
-            <h1>PRESAS</h1>
-            <p>Sistema de Información</p>
+            <h1>BIDELAN</h1>
+            <p>Puntos Kilométricos</p>
         </div>
     </section>
 
     <!-- BUSCADOR -->
     <section class="bloque bloque-buscador">
-        <h2>🔍 Seleccione presa</h2>
+        <h2>🔍 Buscar tramo / PK</h2>
 
         <div class="contenedor-buscador">
 
     <input
         id="buscador"
         type="text"
-        placeholder="Buscar presa..."
+        placeholder="Buscar por carretera o PK..."
         autocomplete="off"
     >
 
@@ -48,275 +48,36 @@
 
     <h2>📂 Selector</h2>
 
-    <!-- INFORMACIÓN -->
+    <!-- CARRETERAS -->
     <details class="grupo-capas" open>
 
         <summary>
             <span class="flecha-grupo"></span>
-            Información
+            Carreteras
         </summary>
 
         <div class="contenido-grupo">
 
             <label class="fila-capa">
                 <input
-                    id="checkPresas"
+                    id="checkPKv0"
                     type="checkbox"
                     checked
                 >
                 <span class="simbolo-capa simbolo-punto"></span>
-                PRESAS
-            </label>
-
-            <label class="fila-capa">
-                <input
-                    id="checkLimites"
-                    type="checkbox"
-                    checked
-                >
-                <span class="simbolo-capa simbolo-linea"></span>
-                LÍMITES ADMINISTRATIVOS
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                <span class="simbolo-capa simbolo-poligono"></span>
-                EMBALSES
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                <span class="simbolo-capa simbolo-linea-azul"></span>
-                RÍOS
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                <span class="simbolo-capa simbolo-poligono-verde"></span>
-                CUENCAS
+                PUNTOS KILOMÉTRICOS
             </label>
 
         </div>
 
     </details>
 
-    <!-- INGENIERÍA -->
-    <details class="grupo-capas" open>
-
-        <summary>
-            <span class="flecha-grupo"></span>
-            Ingeniería
-        </summary>
-
-        <div class="contenido-grupo">
-
-            <div class="capa-raster">
-
-    <label class="fila-capa">
-        <input
-            id="checkCaladoMaximo"
-            type="checkbox"
-            checked
-        >
-
-        <span class="simbolo-capa simbolo-calado"></span>
-
-        CALADO MÁXIMO
-    </label>
-
-    <!-- Herramientas de la capa ráster -->
-    <div class="herramientas-raster">
-
-        <button
-            id="btnPaletaCalado"
-            class="boton-raster"
-            type="button"
-            title="Cambiar paleta de colores"
-        >
-            🎨
-        </button>
-
-        <div class="control-opacidad" title="Opacidad de la capa">
-
-            <span>◐</span>
-
-            <input
-                id="sliderOpacidadCalado"
-                type="range"
-                min="0"
-                max="100"
-                value="80"
-                step="1"
-            >
-
-            <output id="valorOpacidadCalado">
-                80 %
-            </output>
-
-        </div>
-
-        <button
-            id="btnConsultarCalado"
-            class="boton-raster"
-            type="button"
-            title="Consultar valor del calado"
-            aria-pressed="false"
-        >
-            ℹ
-        </button>
-
-        <button
-            id="btnLeyendaCalado"
-            class="boton-raster"
-            type="button"
-            title="Mostrar leyenda"
-        >
-            ▤
-        </button>
-
-    </div>
-
-    <!-- Selector de paleta -->
-    <div
-        id="panelPaletaCalado"
-        class="panel-herramienta-raster"
-        hidden
-    >
-
-        <label for="selectPaletaCalado">
-            Paleta:
-        </label>
-
-        <select id="selectPaletaCalado">
-            <option value="hidraulica">
-                Hidráulica
-            </option>
-
-            <option value="azules">
-                Azules
-            </option>
-
-            <option value="grises">
-                Escala de grises
-            </option>
-        </select>
-
-    </div>
-
-    <!-- Leyenda -->
-    <div
-        id="leyendaCalado"
-        class="leyenda-raster"
-        hidden
-    >
-
-        <div class="titulo-leyenda">
-            Calado máximo
-        </div>
-
-        <div class="fila-leyenda">
-            <span class="color-calado color-calado-1"></span>
-            0–0,50 m
-        </div>
-
-        <div class="fila-leyenda">
-            <span class="color-calado color-calado-2"></span>
-            0,50–1,00 m
-        </div>
-
-        <div class="fila-leyenda">
-            <span class="color-calado color-calado-3"></span>
-            1,00–2,00 m
-        </div>
-
-        <div class="fila-leyenda">
-            <span class="color-calado color-calado-4"></span>
-            2,00–4,00 m
-        </div>
-
-        <div class="fila-leyenda">
-            <span class="color-calado color-calado-5"></span>
-            Más de 4,00 m
-        </div>
-
-    </div>
-
-</div>
-
-            <label class="fila-capa capa-pendiente">
-                <input
-                    id="checkVelocidadMaxima"
-                    type="checkbox"
-                    disabled
-                >
-                <span class="simbolo-capa simbolo-velocidad"></span>
-                VELOCIDAD MÁXIMA
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input
-                    id="checkTiempoLlegada"
-                    type="checkbox"
-                    disabled
-                >
-                <span class="simbolo-capa simbolo-tiempo"></span>
-                TIEMPO DE LLEGADA
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input
-                    id="checkZFP"
-                    type="checkbox"
-                    disabled
-                >
-                <span class="simbolo-capa simbolo-zfp"></span>
-                ZONA DE FLUJO PREFERENTE (ZFP)
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                ZONAS INUNDABLES
-            </label>
-          
-        </div>
-
-    </details>
-
-    <!-- CARTOGRAFÍA -->
-    <details class="grupo-capas">
-
-        <summary>
-            <span class="flecha-grupo"></span>
-            Cartografía
-        </summary>
-
-        <div class="contenido-grupo">
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                MDT
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                ORTOFOTO
-            </label>
-
-            <label class="fila-capa capa-pendiente">
-                <input type="checkbox" disabled>
-                CARRETERAS
-            </label>
-
-        </div>
-
-    </details>
-
-</section>   
+</section>
 
     <!-- PANEL DE INFORMACIÓN -->
     <section id="info" class="bloque info">
         <h2>ℹ Información</h2>
-        <p>Seleccione una presa en el mapa.</p>
+        <p>Seleccione un punto kilométrico en el mapa.</p>
     </section>
 
 </aside>
@@ -333,11 +94,6 @@
     <script src="js/panel.js"></script>
     <script src="js/app.js"></script>
     <script src="js/buscador.js"></script>
-    <script src="js/capas.js"></script>
-
-
-    <script src="js/raster/RasterLayer.js"></script>
-    <script src="js/raster.js"></script>
     <script src="js/capas.js"></script>
 
 </body>

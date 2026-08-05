@@ -1,6 +1,4 @@
-const checkPresas = document.getElementById("checkPresas");
-const checkLimites = document.getElementById("checkLimites");
-const checkCaladoMaximo = document.getElementById("checkCaladoMaximo");
+const checkPKv0 = document.getElementById("checkPKv0");
 
 
 /**
@@ -24,33 +22,12 @@ function cambiarVisibilidadCapa(capa, visible) {
 }
 
 
-// Capa de presas
-checkPresas.addEventListener("change", function () {
+// Puntos kilométricos
+checkPKv0.addEventListener("change", function () {
 
     cambiarVisibilidadCapa(
-        capaPresas,
-        checkPresas.checked
-    );
-
-});
-
-
-// Límites administrativos
-checkLimites.addEventListener("change", function () {
-
-    cambiarVisibilidadCapa(
-        provincias,
-        checkLimites.checked
-    );
-
-});
-// Calado máximo
-checkCaladoMaximo.addEventListener("change", function () {
-
-    console.log("Calado:", checkCaladoMaximo.checked);
-
-    rasterCaladoMaximo.setVisible(
-        checkCaladoMaximo.checked
+        capaPKv0,
+        checkPKv0.checked
     );
 
 });

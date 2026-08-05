@@ -110,14 +110,14 @@ body {
     height: 100%;
 }
 
-/* Ficha de presa */
-.ficha-presa-panel h3 {
+/* Ficha de punto kilométrico */
+.ficha-pk-panel h3 {
     margin: 0 0 10px 0;
     color: #1f4e79;
     font-size: 20px;
 }
 
-.ficha-presa-panel p {
+.ficha-pk-panel p {
     margin: 6px 0;
     font-size: 14px;
 }
@@ -226,7 +226,7 @@ body {
     flex: 0 0 auto;
 }
 
-/* Punto de presa */
+/* Punto kilométrico */
 .simbolo-punto {
     width: 10px;
     height: 10px;
@@ -234,36 +234,6 @@ body {
     background: #1f4e79;
     border: 1px solid #ffffff;
     box-shadow: 0 0 0 1px #1f4e79;
-}
-
-/* Línea administrativa */
-.simbolo-linea {
-    width: 16px;
-    height: 0;
-    border-top: 2px solid #e0c900;
-}
-
-/* Río */
-.simbolo-linea-azul {
-    width: 16px;
-    height: 0;
-    border-top: 2px solid #2589bd;
-}
-
-/* Embalse */
-.simbolo-poligono {
-    width: 14px;
-    height: 10px;
-    background: rgba(50, 145, 210, 0.35);
-    border: 1px solid #3291d2;
-}
-
-/* Cuenca */
-.simbolo-poligono-verde {
-    width: 14px;
-    height: 10px;
-    background: rgba(80, 150, 85, 0.25);
-    border: 1px solid #509655;
 }
 /* Distribución vertical del panel lateral */
 
@@ -370,7 +340,7 @@ h2{
     display: block;
 }
 
-.sugerencia-presa {
+.sugerencia-pk {
     display: block;
     width: 100%;
 
@@ -387,12 +357,12 @@ h2{
     cursor: pointer;
 }
 
-.sugerencia-presa:last-child {
+.sugerencia-pk:last-child {
     border-bottom: none;
 }
 
-.sugerencia-presa:hover,
-.sugerencia-presa:focus {
+.sugerencia-pk:hover,
+.sugerencia-pk:focus {
     background: #eaf2f8;
     color: #1f4e79;
     outline: none;
@@ -402,236 +372,4 @@ h2{
     padding: 10px 12px;
     color: #7a858d;
     font-size: 13px;
-}
-/* Símbolo de calado */
-.simbolo-calado {
-    width: 15px;
-    height: 11px;
-    background: linear-gradient(
-        90deg,
-        #c8efff,
-        #3aa7e8,
-        #184f9e
-    );
-    border: 1px solid #1f6394;
-    border-radius: 2px;
-}
-
-/* Símbolo de velocidad */
-.simbolo-velocidad {
-    width: 15px;
-    height: 11px;
-    background: linear-gradient(
-        90deg,
-        #fff3b0,
-        #f39c12,
-        #c0392b
-    );
-    border: 1px solid #b86c16;
-    border-radius: 2px;
-}
-
-/* Símbolo de tiempo de llegada */
-.simbolo-tiempo {
-    width: 15px;
-    height: 11px;
-    background: linear-gradient(
-        90deg,
-        #e8d9ff,
-        #9b59b6,
-        #4a235a
-    );
-    border: 1px solid #74458a;
-    border-radius: 2px;
-}
-
-/* Símbolo de Zona de Flujo Preferente */
-.simbolo-zfp {
-    width: 15px;
-    height: 11px;
-    background: rgba(220, 30, 30, 0.35);
-    border: 2px solid #c82323;
-    box-sizing: border-box;
-    border-radius: 2px;
-}
-/* =========================================================
-   HERRAMIENTAS DE CAPAS RÁSTER
-   ========================================================= */
-
-.capa-raster {
-    margin-bottom: 5px;
-    border-radius: 5px;
-}
-
-.herramientas-raster {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    margin: 2px 4px 7px 28px;
-    padding: 5px 6px;
-
-    background: #f2f6f9;
-    border: 1px solid #dce4ea;
-    border-radius: 5px;
-}
-
-.boton-raster {
-    width: 28px;
-    height: 27px;
-
-    padding: 0;
-
-    border: 1px solid #bdcbd6;
-    border-radius: 4px;
-
-    background: #ffffff;
-    color: #315b7d;
-
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.boton-raster:hover {
-    background: #e3eef5;
-    border-color: #7e9db4;
-}
-
-.boton-raster.activo {
-    background: #1f4e79;
-    border-color: #1f4e79;
-    color: #ffffff;
-}
-
-
-/* Opacidad */
-
-.control-opacidad {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    flex: 1;
-}
-
-.control-opacidad input[type="range"] {
-    min-width: 60px;
-    width: 100%;
-    cursor: pointer;
-}
-
-.control-opacidad output {
-    min-width: 36px;
-    color: #526675;
-    font-size: 11px;
-    text-align: right;
-}
-
-
-/* Panel de paleta */
-
-.panel-herramienta-raster {
-    margin: 0 4px 7px 28px;
-    padding: 8px;
-
-    background: #f8fafc;
-    border: 1px solid #dce4ea;
-    border-radius: 5px;
-
-    font-size: 12px;
-}
-
-.panel-herramienta-raster select {
-    width: 100%;
-    margin-top: 5px;
-    padding: 5px;
-
-    border: 1px solid #bdcbd6;
-    border-radius: 4px;
-
-    background: #ffffff;
-}
-
-
-/* Leyenda */
-
-.leyenda-raster {
-    margin: 0 4px 8px 28px;
-    padding: 9px;
-
-    background: #ffffff;
-    border: 1px solid #d5dfe7;
-    border-radius: 5px;
-
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
-}
-
-.titulo-leyenda {
-    margin-bottom: 7px;
-    color: #1f4e79;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.fila-leyenda {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    margin: 4px 0;
-
-    color: #4a5964;
-    font-size: 11px;
-}
-
-.color-calado {
-    display: inline-block;
-    width: 24px;
-    height: 10px;
-
-    border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-.color-calado-1 {
-    background: rgb(198, 239, 255);
-}
-
-.color-calado-2 {
-    background: rgb(93, 192, 255);
-}
-
-.color-calado-3 {
-    background: rgb(25, 118, 210);
-}
-
-.color-calado-4 {
-    background: rgb(86, 62, 180);
-}
-
-.color-calado-5 {
-    background: linear-gradient(
-        90deg,
-        rgb(220, 55, 70),
-        rgb(80, 0, 35)
-    );
-}
-
-
-/* Consulta en el panel de información */
-
-.consulta-raster {
-    margin-top: 12px;
-    padding-top: 10px;
-
-    border-top: 1px solid #ccd7df;
-}
-
-.consulta-raster h3 {
-    margin: 0 0 7px 0;
-
-    color: #1f4e79;
-    font-size: 14px;
-}
-
-.consulta-raster p {
-    margin: 4px 0;
 }

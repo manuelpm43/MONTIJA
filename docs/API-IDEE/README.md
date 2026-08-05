@@ -1,6 +1,6 @@
 # Biblioteca API-IDEE
 
-Esta carpeta contiene una recopilación de funcionalidades de la API-IDEE utilizadas durante el desarrollo del proyecto PRESAS.
+Esta carpeta contiene una recopilación de funcionalidades de la API-IDEE utilizadas durante el desarrollo de proyectos con este esqueleto (originalmente PRESAS, actualmente BIDELAN).
 
 Objetivos:
 
@@ -14,5 +14,5 @@ Cada documento incluye:
 - Descripción.
 - Ejemplo oficial.
 - Código importante.
-- Adaptación realizada en PRESAS.
+- Adaptación realizada en el proyecto.
 - Observaciones.

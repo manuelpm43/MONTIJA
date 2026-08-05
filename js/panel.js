@@ -1,19 +1,16 @@
-function mostrarFichaPresa(atributos) {
+function mostrarInfoPK(atributos) {
 
     const panelInfo = document.getElementById("info");
 
     panelInfo.innerHTML = `
         <h2>ℹ Información</h2>
 
-        <div class="ficha-presa-panel">
-            <h3>🏞 ${atributos.NOMBRE ?? "Sin nombre"}</h3>
+        <div class="ficha-pk-panel">
+            <h3>🛣 ${atributos.CARRETERA ?? "Sin carretera"}</h3>
 
-            <p><b>Río:</b> ${atributos.RIO ?? "-"}</p>
-            <p><b>Cuenca:</b> ${atributos.CUENCA_HIDROGRAFICA ?? "-"}</p>
-            <p><b>Área cuenca:</b> ${atributos.AREA_CUENCA ?? "-"} km²</p>
-            <p><b>Tipo:</b> ${atributos.TIPO ?? "-"}</p>
-            <p><b>Cota coronación:</b> ${atributos.COTA_CORONACION ?? "-"} m</p>
-            <p><b>NME:</b> ${atributos.NME ?? "-"} m</p>
+            <p><b>PK:</b> ${atributos.PK ?? "-"}</p>
+            <p><b>Sentido:</b> ${atributos.SENTIDO ?? "-"}</p>
+            <p><b>Tramo:</b> ${atributos.IDCTRAMO ?? "-"}</p>
         </div>
     `;
 }

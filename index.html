@@ -160,18 +160,26 @@
 
 </section>
 
-    <!-- PANEL DE INFORMACIÓN -->
-    <section id="info" class="bloque info">
-        <h2>ℹ Información</h2>
-        <p>Seleccione un elemento en el mapa.</p>
-    </section>
-
 </aside>
 
         <main id="main">
             <div id="mapa" class="m-container"></div>
         </main>
 
+    </div>
+
+    <!-- VENTANA EMERGENTE: ficha del elemento seleccionado -->
+    <div class="overlay-ficha" id="overlayFicha">
+        <div class="popup-ficha">
+
+            <div class="cabecera-ficha">
+                <span>ℹ Información</span>
+                <button class="btn-cerrar-ficha" id="btnCerrarFicha" type="button" aria-label="Cerrar">&times;</button>
+            </div>
+
+            <div id="contenidoFicha" class="cuerpo-ficha"></div>
+
+        </div>
     </div>
 
     <script src="https://componentes.idee.es/api-idee/vendor/browser-polyfill.js"></script>

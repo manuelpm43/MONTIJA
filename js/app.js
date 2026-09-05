@@ -199,7 +199,98 @@ mapa.on("click", function (evento) {
     const coordenadas = evento.coord;
     const resolucion = evento.vendor.map.getView().getResolution();
 
-    // TODO: consultar por WFS el elemento (dirección / contador / parcela)
-    // más cercano a las coordenadas del click y mostrar su ficha en el panel.
+    if (document.getElementById("checkContadores").checked) {
+        consultarContadores(coordenadas, resolucion);
+    }
+
+    // TODO: extender la consulta al resto de capas (direcciones, catastro)
+    // cuando también deban responder al click.
 
 });
+
+
+/**
+ * Consulta por WFS el contador más cercano a unas coordenadas,
+ * dentro de una tolerancia en píxeles, y muestra su ficha en la ventana emergente.
+ *
+ * @param {Array<number>} coordenadas - Coordenadas del click, en la proyección del mapa.
+ * @param {number} resolucion - Resolución actual del mapa (unidades de mapa por píxel).
+ */
+function consultarContadores(coordenadas, resolucion) {
+
+    const toleranciaPixeles = 6;
+    const buffer = resolucion * toleranciaPixeles;
+
+    const bbox = [
+        coordenadas[0] - buffer,
+        coordenadas[1] - buffer,
+        coordenadas[0] + buffer,
+        coordenadas[1] + buffer
+    ].join(",");
+
+    const url = `${geoserverWfsUrl}?service=WFS&version=2.0.0&request=GetFeature&typeNames=montija:contadores_enriquecida&outputFormat=application/json&srsName=EPSG:3857&bbox=${bbox},EPSG:3857`;
+
+    fetch(url)
+        .then(function (respuesta) {
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    `No se pudo consultar el WFS: ${respuesta.status}`
+                );
+            }
+
+            return respuesta.json();
+        })
+        .then(function (geojson) {
+
+            if (geojson.features.length === 0) {
+                console.log("No hay ningún contador en este punto");
+                return;
+            }
+
+            const featureMasCercana = featureMasCercanaA(
+                coordenadas,
+                geojson.features
+            );
+
+            mostrarInfoElemento(featureMasCercana.properties);
+
+        })
+        .catch(function (error) {
+
+            console.error("Error al consultar el contador:", error);
+
+        });
+
+}
+
+
+function featureMasCercanaA(coordenadas, features) {
+
+    return features.reduce(function (masCercana, actual) {
+
+        const distanciaActual = distanciaEntrePuntos(
+            coordenadas,
+            actual.geometry.coordinates
+        );
+
+        const distanciaMasCercana = distanciaEntrePuntos(
+            coordenadas,
+            masCercana.geometry.coordinates
+        );
+
+        return distanciaActual < distanciaMasCercana ? actual : masCercana;
+
+    });
+
+}
+
+
+function distanciaEntrePuntos(a, b) {
+
+    const dx = a[0] - b[0];
+    const dy = a[1] - b[1];
+
+    return Math.sqrt(dx * dx + dy * dy);
+
+}

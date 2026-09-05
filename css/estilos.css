@@ -89,18 +89,6 @@ body {
     font-size: 14px;
 }
 
-/* Información */
-.info {
-    margin-top: auto;
-    background: #f8fafc;
-    min-height: 210px;
-}
-
-.info p {
-    color: #555;
-    font-size: 14px;
-}
-
 /* Zona mapa */
 #main {
     flex: 1;
@@ -253,14 +241,6 @@ body {
     min-height: 0;
     overflow-y: auto;
 }
-
-#info {
-    flex: 0 0 auto;
-    min-height: 180px;
-    max-height: 260px;
-    overflow-y: auto;
-    margin-top: 0;
-}
 h2{
 
     background:#eef3f7;
@@ -306,12 +286,6 @@ h2{
     background: #008f4c;
     border-left: 4px solid #00602f;
     color: #ffffff;
-}
-
-/* La zona de información queda ligeramente diferenciada */
-#info {
-    background: #f8fafc;
-    border-top: 3px solid #9fb4c7;
 }
 /* =========================================================
    AUTOCOMPLETADO DEL BUSCADOR
@@ -376,4 +350,147 @@ h2{
     padding: 10px 12px;
     color: #7a858d;
     font-size: 13px;
+}
+/* =========================================================
+   VENTANA EMERGENTE: FICHA DEL ELEMENTO SELECCIONADO
+   ========================================================= */
+
+.overlay-ficha {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    z-index: 2500;
+}
+
+.overlay-ficha.active {
+    opacity: 1;
+}
+
+.popup-ficha {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 3px solid #2589bd;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+
+    width: 90%;
+    max-width: 380px;
+
+    pointer-events: none;
+    transform: translate(-50%, calc(-50% - 20px));
+    transition: transform 0.3s ease;
+}
+
+.overlay-ficha.active .popup-ficha {
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+}
+
+.popup-ficha.arrastrando {
+    transition: none;
+    user-select: none;
+}
+
+/* Faldón superior con el título de la ficha (barra de arrastre) */
+.cabecera-ficha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 16px;
+
+    background: #1f4e79;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+
+    cursor: grab;
+}
+
+.popup-ficha.arrastrando .cabecera-ficha {
+    cursor: grabbing;
+}
+
+.cuerpo-ficha {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Pestañas: LOCALIDAD / CONTADOR / DIRECCION / CATASTRO */
+.tabs-ficha {
+    display: flex;
+    position: sticky;
+    top: 0;
+
+    background: #ffffff;
+    border-bottom: 2px solid #dce3e9;
+}
+
+.tab-ficha {
+    flex: 1;
+
+    padding: 10px 4px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: none;
+
+    color: #5c6b76;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+
+    cursor: pointer;
+}
+
+.tab-ficha:hover {
+    color: #1f4e79;
+}
+
+.tab-ficha.active {
+    color: #1f4e79;
+    border-bottom-color: #2589bd;
+}
+
+.paneles-ficha {
+    padding: 20px 32px 32px;
+}
+
+.panel-tab-ficha {
+    display: none;
+}
+
+.panel-tab-ficha.active {
+    display: block;
+}
+
+.btn-cerrar-ficha {
+    flex: 0 0 auto;
+
+    background: none;
+    border: none;
+    font-size: 22px;
+    line-height: 1;
+    color: #ffffff;
+
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.btn-cerrar-ficha:hover {
+    opacity: 0.7;
 }

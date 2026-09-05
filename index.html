@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Curso API-IDEE</title>
+    <title>Visor MONTIJA</title>
 
     <link rel="stylesheet" href="https://componentes.idee.es/api-idee/assets/css/apiidee.ol.min.css">
     <link rel="stylesheet" href="css/estilos.css">
@@ -17,24 +17,24 @@
 
     <!-- CABECERA -->
     <section id="logo">
-        <div class="logo-icono">🛣️</div>
+        <div class="logo-icono">🗺️</div>
 
         <div>
-            <h1>BIDELAN</h1>
-            <p>Puntos Kilométricos</p>
+            <h1>MONTIJA</h1>
+            <p>Visor GIS Merindad de Montija</p>
         </div>
     </section>
 
     <!-- BUSCADOR -->
     <section class="bloque bloque-buscador">
-        <h2>🔍 Buscar tramo / PK</h2>
+        <h2>🔍 Buscar</h2>
 
         <div class="contenedor-buscador">
 
     <input
         id="buscador"
         type="text"
-        placeholder="Buscar por carretera o PK..."
+        placeholder="Buscar dirección, contador o parcela..."
         autocomplete="off"
     >
 
@@ -48,24 +48,110 @@
 
     <h2>📂 Selector</h2>
 
-    <!-- CARRETERAS -->
+    <!-- DIRECCIONES -->
     <details class="grupo-capas" open>
 
         <summary>
             <span class="flecha-grupo"></span>
-            Carreteras
+            Direcciones
         </summary>
 
         <div class="contenido-grupo">
 
-            <label class="fila-capa">
-                <input
-                    id="checkPKv0"
-                    type="checkbox"
-                    checked
-                >
+            <label class="fila-capa capa-pendiente">
+                <input id="checkDirecciones" type="checkbox" disabled>
                 <span class="simbolo-capa simbolo-punto"></span>
-                PUNTOS KILOMÉTRICOS
+                IGN_DIRECCIONES
+            </label>
+
+        </div>
+
+    </details>
+
+    <!-- CONTADORES -->
+    <details class="grupo-capas" open>
+
+        <summary>
+            <span class="flecha-grupo"></span>
+            Contadores
+        </summary>
+
+        <div class="contenido-grupo">
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkContadores" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                MONTIJA EPC (ENRIQUECIDA)
+            </label>
+
+        </div>
+
+    </details>
+
+    <!-- CATASTRO -->
+    <details class="grupo-capas" open>
+
+        <summary>
+            <span class="flecha-grupo"></span>
+            Catastro · 09219 Merindad de Montija
+        </summary>
+
+        <div class="contenido-grupo">
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkBuildingPart" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                BUILDING PART
+            </label>
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkBuilding" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                BUILDING
+            </label>
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkOtherConstruction" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                OTHER CONSTRUCTION
+            </label>
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkCadastralParcel" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                CADASTRAL PARCEL
+            </label>
+
+        </div>
+
+    </details>
+
+    <!-- CARTOGRAFÍA BASE -->
+    <details class="grupo-capas" open>
+
+        <summary>
+            <span class="flecha-grupo"></span>
+            Cartografía base
+        </summary>
+
+        <div class="contenido-grupo">
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkNucleos" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                NÚCLEOS
+            </label>
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkMunicipios" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                MUNICIPIOS
+            </label>
+
+            <label class="fila-capa capa-pendiente">
+                <input id="checkOrtofoto" type="checkbox" disabled>
+                <span class="simbolo-capa simbolo-punto"></span>
+                ORTOFOTO
             </label>
 
         </div>
@@ -77,7 +163,7 @@
     <!-- PANEL DE INFORMACIÓN -->
     <section id="info" class="bloque info">
         <h2>ℹ Información</h2>
-        <p>Seleccione un punto kilométrico en el mapa.</p>
+        <p>Seleccione un elemento en el mapa.</p>
     </section>
 
 </aside>

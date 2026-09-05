@@ -1,6 +1,6 @@
 # Biblioteca API-IDEE
 
-Esta carpeta contiene una recopilación de funcionalidades de la API-IDEE utilizadas durante el desarrollo de proyectos con este esqueleto (originalmente PRESAS, actualmente BIDELAN).
+Esta carpeta contiene una recopilación de funcionalidades de la API-IDEE utilizadas durante el desarrollo de proyectos con este esqueleto (originalmente PRESAS, después BIDELAN, actualmente MONTIJA).
 
 Objetivos:
 

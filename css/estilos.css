@@ -110,14 +110,14 @@ body {
     height: 100%;
 }
 
-/* Ficha de punto kilométrico */
-.ficha-pk-panel h3 {
+/* Ficha de información del elemento seleccionado */
+.ficha-info-panel h3 {
     margin: 0 0 10px 0;
     color: #1f4e79;
     font-size: 20px;
 }
 
-.ficha-pk-panel p {
+.ficha-info-panel p {
     margin: 6px 0;
     font-size: 14px;
 }
@@ -226,7 +226,7 @@ body {
     flex: 0 0 auto;
 }
 
-/* Punto kilométrico */
+/* Elemento puntual */
 .simbolo-punto {
     width: 10px;
     height: 10px;
@@ -340,7 +340,7 @@ h2{
     display: block;
 }
 
-.sugerencia-pk {
+.sugerencia-resultado {
     display: block;
     width: 100%;
 
@@ -357,12 +357,12 @@ h2{
     cursor: pointer;
 }
 
-.sugerencia-pk:last-child {
+.sugerencia-resultado:last-child {
     border-bottom: none;
 }
 
-.sugerencia-pk:hover,
-.sugerencia-pk:focus {
+.sugerencia-resultado:hover,
+.sugerencia-resultado:focus {
     background: #eaf2f8;
     color: #1f4e79;
     outline: none;

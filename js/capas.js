@@ -1,6 +1,3 @@
-const checkPKv0 = document.getElementById("checkPKv0");
-
-
 /**
  * Activa o desactiva una capa API-IDEE.
  *
@@ -22,12 +19,6 @@ function cambiarVisibilidadCapa(capa, visible) {
 }
 
 
-// Puntos kilométricos
-checkPKv0.addEventListener("change", function () {
-
-    cambiarVisibilidadCapa(
-        capaPKv0,
-        checkPKv0.checked
-    );
-
-});
+// TODO: crear las capas (direcciones, contadores, catastro, cartografía base)
+// y enlazar cada checkbox del árbol de capas (index.html) con su capa
+// mediante cambiarVisibilidadCapa, quitando el atributo "disabled" del input.

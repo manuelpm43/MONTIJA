@@ -131,6 +131,69 @@ mapa.addLayers([
     capaContadores
 ]);
 
+// Al abrir el visor, encuadrar sobre la extensión real de los contadores
+// (se calcula a partir de los datos vivos, no de un valor fijo, para no
+// quedar desactualizado según se añadan o quiten contadores).
+fetch(`${geoserverWfsUrl}?service=WFS&version=2.0.0&request=GetFeature&typeNames=montija:contadores_enriquecida&outputFormat=application/json&srsName=EPSG:3857&propertyName=geom`)
+    .then(function (respuesta) {
+
+        if (!respuesta.ok) {
+            throw new Error(
+                `No se pudo consultar el WFS: ${respuesta.status}`
+            );
+        }
+
+        return respuesta.json();
+    })
+    .then(function (geojson) {
+
+        const extension = extensionDeFeatures(geojson.features);
+
+        if (extension) {
+            mapa.setBbox(extension);
+        }
+
+    })
+    .catch(function (error) {
+
+        console.error("No se pudo encuadrar sobre los contadores:", error);
+
+    });
+
+
+/**
+ * Calcula el bbox [minX, minY, maxX, maxY] que envuelve las geometrías
+ * puntuales de una colección de features GeoJSON.
+ *
+ * @param {Array<object>} features - Features GeoJSON con geometry.type "Point".
+ * @returns {Array<number>|null} Extensión [minX, minY, maxX, maxY], o null si no hay features.
+ */
+function extensionDeFeatures(features) {
+
+    if (!features || features.length === 0) {
+        return null;
+    }
+
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+
+    features.forEach(function (feature) {
+
+        const [x, y] = feature.geometry.coordinates;
+
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+
+    });
+
+    return [minX, minY, maxX, maxY];
+
+}
+
 mapa.on("click", function (evento) {
 
     const coordenadas = evento.coord;

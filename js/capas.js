@@ -19,6 +19,30 @@ function cambiarVisibilidadCapa(capa, visible) {
 }
 
 
-// TODO: crear las capas (direcciones, contadores, catastro, cartografía base)
-// y enlazar cada checkbox del árbol de capas (index.html) con su capa
-// mediante cambiarVisibilidadCapa, quitando el atributo "disabled" del input.
+function enlazarCheckboxCapa(idCheckbox, capa) {
+
+    const checkbox = document.getElementById(idCheckbox);
+
+    checkbox.addEventListener("change", function () {
+        cambiarVisibilidadCapa(capa, checkbox.checked);
+    });
+
+}
+
+
+// Direcciones y contadores
+enlazarCheckboxCapa("checkDirecciones", capaDirecciones);
+enlazarCheckboxCapa("checkContadores", capaContadores);
+
+// Catastro 09219 - Merindad de Montija
+enlazarCheckboxCapa("checkBuildingPart", capaBuildingPart);
+enlazarCheckboxCapa("checkBuilding", capaBuilding);
+enlazarCheckboxCapa("checkOtherConstruction", capaOtherConstruction);
+enlazarCheckboxCapa("checkCadastralParcel", capaCadastralParcel);
+
+// Cartografía base
+enlazarCheckboxCapa("checkNucleos", capaNucleos);
+enlazarCheckboxCapa("checkMunicipios", capaMunicipio);
+
+// La ortofoto no es una capa WMS del workspace montija: ya está disponible
+// mediante el selector de fondos del mapa (control "backgroundlayers").

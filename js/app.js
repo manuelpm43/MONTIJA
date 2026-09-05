@@ -26,19 +26,110 @@ IDEE.config("backgroundlayers", [
 const mapa = IDEE.map({
     container: 'mapa',
     controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers'],
-    zoom: 5,
-    center: [-467062.8225, 4983459.6216]
+    zoom: 13,
+    center: [-387870.19, 5321610.48]
 });
 console.log(mapa);
 
-// Servicio GeoServer del proyecto MONTIJA
+// Servicios GeoServer del proyecto MONTIJA (workspace "montija")
+const geoserverWmsUrl = "http://217.71.202.62:8080/geoserver/montija/wms";
 const geoserverWfsUrl = "http://217.71.202.62:8080/geoserver/montija/ows";
 
-// TODO: capas pendientes de diseño e implementación
-// - IGN_direcciones (WFS)
-// - Montija EPC - contadores enriquecida
-// - Catastro 09219 Merindad de Montija: building part, building, other construction, cadastral parcel
-// - Cartografía base: núcleos, municipios, ortofoto
+// Cartografía base
+const capaMunicipio = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:nunicipio_merindad_de_montija",
+    legend: "Municipio",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: true
+});
+
+const capaNucleos = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:nucleos_merindad_de_montija",
+    legend: "Núcleos",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: true
+});
+
+// Catastro 09219 - Merindad de Montija
+const capaCadastralParcel = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:a_es_sdgc_cp_09219_cadastralparcel",
+    legend: "Parcela catastral",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+const capaOtherConstruction = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:a_es_sdgc_bu_09219_otherconstruction",
+    legend: "Otras construcciones",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+const capaBuilding = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:a_es_sdgc_bu_09219_building",
+    legend: "Edificio",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+const capaBuildingPart = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:a_es_sdgc_bu_09219_buildingpart",
+    legend: "Parte de edificio",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+// Direcciones y contadores
+const capaDirecciones = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:ign_direcciones",
+    legend: "Direcciones (IGN)",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+const capaContadores = new IDEE.layer.WMS({
+    url: geoserverWmsUrl,
+    name: "montija:contadores_enriquecida",
+    legend: "Montija EPC (enriquecida)",
+    useCapabilities: false
+}, {
+    crossOrigin: null,
+    visibility: false
+});
+
+// Orden de apilado: base abajo, catastro en medio (parcela -> ... -> building part),
+// direcciones y contadores arriba del todo.
+mapa.addLayers([
+    capaMunicipio,
+    capaNucleos,
+    capaCadastralParcel,
+    capaOtherConstruction,
+    capaBuilding,
+    capaBuildingPart,
+    capaDirecciones,
+    capaContadores
+]);
 
 mapa.on("click", function (evento) {
 

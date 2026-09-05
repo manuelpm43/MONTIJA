@@ -28,28 +28,30 @@ body {
 
 /* Logo */
 #logo {
-    background: #1f4e79;
-    color: white;
+    background: #ffffff;
     padding: 18px;
     display: flex;
     align-items: center;
     gap: 14px;
+    border: 2px solid #c7d2dc;
 }
 
-.logo-icono {
-    font-size: 34px;
+.logo-escudo {
+    width: 50px;
+    height: auto;
+    flex: 0 0 auto;
 }
 
 #logo h1 {
     margin: 0;
-    font-size: 26px;
-    letter-spacing: 1px;
+    font-size: 19px;
+    color: #438260;
 }
 
 #logo p {
     margin: 2px 0 0 0;
     font-size: 13px;
-    opacity: 0.9;
+    color: #5c6b66;
 }
 
 /* Bloques */
@@ -138,15 +140,15 @@ body {
     background: #ffffff;
 }
 
-/* Cabecera del grupo */
+/* Cabecera del grupo: amarillo pálido del escudo */
 .grupo-capas summary {
     display: flex;
     align-items: center;
     gap: 7px;
 
     padding: 9px 10px;
-    background: #edf3f7;
-    color: #234f78;
+    background: #fbf1c7;
+    color: #6b5600;
 
     font-size: 14px;
     font-weight: 600;
@@ -176,7 +178,7 @@ body {
 
 /* Cambio visual al pasar por encima */
 .grupo-capas summary:hover {
-    background: #dfeaf2;
+    background: #f5e29a;
 }
 
 /* Contenido interior */
@@ -284,12 +286,6 @@ h2{
         0 -1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* El primer bloque después del logo no necesita borde superior */
-#logo + .bloque {
-    border-top: none;
-    box-shadow: none;
-}
-
 /* Títulos de cada zona */
 .bloque > h2 {
     margin: 0 0 12px 0;
@@ -302,6 +298,14 @@ h2{
     color: #1f4e79;
     font-size: 16px;
     font-weight: 700;
+}
+
+/* Buscar / Selector: verde del escudo */
+.bloque-buscador > h2,
+.bloque-capas > h2 {
+    background: #008f4c;
+    border-left: 4px solid #00602f;
+    color: #ffffff;
 }
 
 /* La zona de información queda ligeramente diferenciada */

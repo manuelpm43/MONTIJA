@@ -194,6 +194,53 @@ function extensionDeFeatures(features) {
 
 }
 
+// Capa que marca el elemento localizado (por click o por buscador), para
+// distinguirlo del resto de puntos de alrededor.
+const capaResaltado = new IDEE.layer.Vector({
+    name: "resaltado",
+    extract: false
+});
+mapa.addLayers(capaResaltado);
+
+const estiloResaltado = new IDEE.style.Point({
+    radius: 14,
+    fill: {
+        color: "#ffcc00",
+        opacity: 0.35
+    },
+    stroke: {
+        color: "#ff6600",
+        width: 3
+    }
+});
+
+
+/**
+ * Marca sobre el mapa el elemento localizado en unas coordenadas,
+ * sustituyendo cualquier marca anterior.
+ *
+ * @param {Array<number>} coordenadas - Coordenadas en la proyección del mapa.
+ */
+function resaltarElemento(coordenadas) {
+
+    capaResaltado.removeFeatures(capaResaltado.getFeatures());
+
+    const feature = new IDEE.Feature("resaltado", {
+        type: "Feature",
+        geometry: {
+            type: "Point",
+            coordinates: coordenadas
+        },
+        properties: {}
+    });
+
+    feature.setStyle(estiloResaltado);
+
+    capaResaltado.addFeatures([feature]);
+
+}
+
+
 mapa.on("click", function (evento) {
 
     const coordenadas = evento.coord;
@@ -253,6 +300,7 @@ function consultarContadores(coordenadas, resolucion) {
                 geojson.features
             );
 
+            resaltarElemento(featureMasCercana.geometry.coordinates);
             mostrarInfoElemento(featureMasCercana.properties);
 
         })

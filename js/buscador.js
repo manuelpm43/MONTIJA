@@ -195,6 +195,7 @@ function seleccionarContador(contador) {
 
     mapa.setCenter(coordenadas);
     mapa.setZoom(18);
+    resaltarElemento(coordenadas);
 
     inputBuscador.value = contador.properties[campoBusquedaActivo()];
     ocultarSugerencias();

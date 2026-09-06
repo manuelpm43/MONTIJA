@@ -25,7 +25,7 @@ IDEE.config("backgroundlayers", [
 
 const mapa = IDEE.map({
     container: 'mapa',
-    controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers'],
+    controls: ['panzoom', 'scale*true', 'scaleline', 'rotate', 'location', 'backgroundlayers*2*true'],
     zoom: 13,
     center: [-387870.19, 5321610.48]
 });

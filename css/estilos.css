@@ -89,6 +89,39 @@ body {
     font-size: 14px;
 }
 
+/* Modo de búsqueda: Nº de serie / Dirección */
+.modo-buscador {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.modo-busqueda {
+    flex: 1;
+
+    padding: 6px 4px;
+    border: 1px solid #cfd6dd;
+    border-radius: 5px;
+    background: #ffffff;
+
+    color: #4c5a63;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.modo-busqueda:hover {
+    border-color: #008f4c;
+    color: #008f4c;
+}
+
+.modo-busqueda.active {
+    background: #008f4c;
+    border-color: #008f4c;
+    color: #ffffff;
+}
+
 /* Zona mapa */
 #main {
     flex: 1;
@@ -224,6 +257,12 @@ body {
     background: #1f4e79;
     border: 1px solid #ffffff;
     box-shadow: 0 0 0 1px #1f4e79;
+}
+
+/* Leyenda real de GeoServer (GetLegendGraphic) bajo una capa */
+.leyenda-capa {
+    display: block;
+    margin: 2px 0 6px 21px;
 }
 /* Distribución vertical del panel lateral */
 
@@ -379,7 +418,7 @@ h2{
     top: 50%;
     left: 50%;
 
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: #ffffff;
     border: 3px solid #2589bd;
     border-radius: 8px;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);

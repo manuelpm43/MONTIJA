@@ -30,9 +30,42 @@ function enlazarCheckboxCapa(idCheckbox, capa) {
 }
 
 
+/**
+ * Filtra por WMS (CQL_FILTER) los contadores mostrados según el atributo
+ * booleano "geoposicionado", en función de las casillas "Falso" / "Verdadero".
+ */
+function actualizarFiltroContadores() {
+
+    const mostrarFalso = document.getElementById("checkContadoresFalso").checked;
+    const mostrarVerdadero = document.getElementById("checkContadoresVerdadero").checked;
+
+    let cqlFilter;
+
+    if (mostrarFalso && mostrarVerdadero) {
+        cqlFilter = "INCLUDE";
+    } else if (mostrarFalso) {
+        cqlFilter = "geoposicionado = false";
+    } else if (mostrarVerdadero) {
+        cqlFilter = "geoposicionado = true";
+    } else {
+        cqlFilter = "EXCLUDE";
+    }
+
+    capaContadores
+        .getImpl()
+        .getOL3Layer()
+        .getSource()
+        .updateParams({ CQL_FILTER: cqlFilter });
+
+}
+
+
 // Direcciones y contadores
 enlazarCheckboxCapa("checkDirecciones", capaDirecciones);
 enlazarCheckboxCapa("checkContadores", capaContadores);
+
+document.getElementById("checkContadoresFalso").addEventListener("change", actualizarFiltroContadores);
+document.getElementById("checkContadoresVerdadero").addEventListener("change", actualizarFiltroContadores);
 
 // Catastro 09219 - Merindad de Montija
 enlazarCheckboxCapa("checkBuildingPart", capaBuildingPart);

@@ -32,8 +32,8 @@ const mapa = IDEE.map({
 console.log(mapa);
 
 // Servicios GeoServer del proyecto MONTIJA (workspace "montija")
-const geoserverWmsUrl = "https://montija-geoserver.duckdns.org/geoserver/montija/wms";
-const geoserverWfsUrl = "https://montija-geoserver.duckdns.org/geoserver/montija/ows";
+const geoserverWmsUrl = "https://geoserver.geospatiallab.xyz/geoserver/montija/wms";
+const geoserverWfsUrl = "https://geoserver.geospatiallab.xyz/geoserver/montija/ows";
 
 // Cartografía base
 const capaMunicipio = new IDEE.layer.WMS({

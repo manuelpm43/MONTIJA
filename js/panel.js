@@ -93,12 +93,65 @@ function formatearValorFicha(valor) {
 
 
 /**
+ * Etiqueta identificativa de un elemento (contador) para mostrar en el
+ * selector cuando varios coinciden en el mismo punto.
+ *
+ * @param {object} atributos - Propiedades del elemento (GeoJSON properties).
+ * @returns {string} Etiqueta legible.
+ */
+function etiquetaElemento(atributos) {
+
+    return atributos["COD."]
+        || atributos["Nº SERIE CONTADOR NUEVO INSTALADO"]
+        || atributos["NOMBRE"]
+        || "Elemento sin código";
+
+}
+
+
+/**
+ * Muestra un selector para elegir entre varios elementos que coinciden en el
+ * mismo punto del mapa (por ejemplo, varios contadores de un mismo bloque de
+ * pisos), ya que un click solo puede señalar un punto.
+ *
+ * @param {Array<object>} features - Features GeoJSON coincidentes en el punto.
+ */
+function mostrarSelectorElementos(features) {
+
+    const opcionesHtml = features
+        .map(function (feature, indice) {
+            return `<button type="button" class="opcion-selector-ficha" data-indice="${indice}">${escaparHtml(etiquetaElemento(feature.properties))}</button>`;
+        })
+        .join("");
+
+    contenidoFicha.innerHTML = `
+        <p class="intro-selector-ficha">Hay ${features.length} elementos en este punto. Selecciona uno:</p>
+        <div class="selector-ficha">${opcionesHtml}</div>
+    `;
+
+    contenidoFicha.querySelectorAll(".opcion-selector-ficha").forEach(function (boton) {
+
+        boton.addEventListener("click", function () {
+            mostrarInfoElemento(features[Number(boton.dataset.indice)].properties, features);
+        });
+
+    });
+
+    mostrarFicha();
+
+}
+
+
+/**
  * Muestra en la ventana emergente las propiedades de un elemento seleccionado,
  * organizadas en las pestañas LOCALIDAD / CONTADOR / DIRECCION / CATASTRO.
  *
  * @param {object} atributos - Propiedades del elemento (GeoJSON properties).
+ * @param {Array<object>} [elementosCoincidentes] - Si el elemento comparte
+ * punto con otros (varios contadores de un mismo bloque), el resto de
+ * features del grupo, para poder volver al selector.
  */
-function mostrarInfoElemento(atributos) {
+function mostrarInfoElemento(atributos, elementosCoincidentes) {
 
     const camposAsignados = PESTANAS_FICHA.flatMap(function (pestana) {
         return pestana.campos;
@@ -107,6 +160,10 @@ function mostrarInfoElemento(atributos) {
     const camposSinAsignar = Object.keys(atributos).filter(function (clave) {
         return !camposAsignados.includes(clave);
     });
+
+    const volverHtml = elementosCoincidentes && elementosCoincidentes.length > 1
+        ? `<button type="button" id="btnVolverSelectorFicha" class="btn-volver-selector-ficha">‹ Volver a la lista (${elementosCoincidentes.length} elementos)</button>`
+        : "";
 
     const pestanasHtml = PESTANAS_FICHA
         .map(function (pestana, indice) {
@@ -137,9 +194,18 @@ function mostrarInfoElemento(atributos) {
         .join("");
 
     contenidoFicha.innerHTML = `
+        ${volverHtml}
         <div class="tabs-ficha">${pestanasHtml}</div>
         <div class="paneles-ficha">${panelesHtml}</div>
     `;
+
+    if (elementosCoincidentes && elementosCoincidentes.length > 1) {
+
+        document.getElementById("btnVolverSelectorFicha").addEventListener("click", function () {
+            mostrarSelectorElementos(elementosCoincidentes);
+        });
+
+    }
 
     contenidoFicha.querySelectorAll(".tab-ficha").forEach(function (boton) {
 

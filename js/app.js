@@ -304,8 +304,26 @@ function consultarContadores(coordenadas, resolucion) {
                 geojson.features
             );
 
+            // Varios contadores pueden compartir el mismo punto (p.ej. un
+            // bloque de pisos con un contador por vivienda): se agrupan los
+            // que estén casi en la misma posición que el más cercano al
+            // click, en vez de quedarnos solo con uno.
+            const DISTANCIA_MISMO_PUNTO = 2;
+
+            const elementosCoincidentes = geojson.features.filter(function (feature) {
+                return distanciaEntrePuntos(
+                    featureMasCercana.geometry.coordinates,
+                    feature.geometry.coordinates
+                ) <= DISTANCIA_MISMO_PUNTO;
+            });
+
             resaltarElemento(featureMasCercana.geometry.coordinates);
-            mostrarInfoElemento(featureMasCercana.properties);
+
+            if (elementosCoincidentes.length > 1) {
+                mostrarSelectorElementos(elementosCoincidentes);
+            } else {
+                mostrarInfoElemento(featureMasCercana.properties);
+            }
 
         })
         .catch(function (error) {

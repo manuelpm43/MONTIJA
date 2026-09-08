@@ -9,15 +9,19 @@ IDEE.config("backgroundlayers", [
     {
         id: "ortofoto",
         title: "Ortofoto",
+        // PNOA de un año concreto (2023, el más reciente con cobertura completa
+        // de Castilla y León) en vez de "pnoa-ma" (Máxima Actualidad): esta última
+        // mezcla vuelos de años distintos por zona y deja costuras visibles en
+        // los límites entre campañas.
         layers: [
-            "WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*GoogleMapsCompatible*imagen*false*image/jpeg*false*false*true"
+            "WMS*PNOA 2023*https://www.ign.es/wms/pnoa-historico?*PNOA2023*false*true**1.3.0*true*false*true"
         ]
     },
     {
         id: "hibrido",
         title: "Híbrido",
         layers: [
-            "WMTS*https://www.ign.es/wmts/pnoa-ma?*OI.OrthoimageCoverage*GoogleMapsCompatible*imagen*true*image/jpeg*false*false*true",
+            "WMS*PNOA 2023*https://www.ign.es/wms/pnoa-historico?*PNOA2023*true*true**1.3.0*true*false*true",
             "WMTS*https://www.ign.es/wmts/ign-base?*IGNBaseOrto*GoogleMapsCompatible*Callejero*true*image/png*false*false*true"
         ]
     }

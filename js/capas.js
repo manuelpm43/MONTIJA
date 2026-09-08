@@ -74,13 +74,30 @@ enlazarCheckboxCapa("checkOtherConstruction", capaOtherConstruction);
 enlazarCheckboxCapa("checkCadastralParcel", capaCadastralParcel);
 
 // Cartografía base
-enlazarCheckboxCapa("checkNucleos", capaNucleos);
 enlazarCheckboxCapa("checkMunicipios", capaMunicipio);
 
-// NÚCLEOS deja de mostrarse a partir de la escala 1:5000 (zoom mayor, más
-// detalle), independientemente de la casilla: pixel OGC estándar 0.28mm/px,
-// resolución (m/px) = escala * 0.00028.
-capaNucleos.getImpl().getOL3Layer().setMinResolution(5000 * 0.00028);
+/**
+ * NÚCLEOS deja de mostrarse a partir de la escala 1:5000 (zoom mayor, más
+ * detalle), tanto si la casilla está marcada como si no. Se controla a mano
+ * (en vez de con minResolution en la capa) porque esa propiedad no se
+ * estaba respetando al renderizar.
+ *
+ * Pixel OGC estándar 0.28mm/px: resolución (m/px) = escala * 0.00028.
+ */
+const RESOLUCION_LIMITE_NUCLEOS = 5000 * 0.00028;
+
+function actualizarVisibilidadNucleos() {
+
+    const marcado = document.getElementById("checkNucleos").checked;
+    const resolucionActual = mapa.getMapImpl().getView().getResolution();
+
+    cambiarVisibilidadCapa(capaNucleos, marcado && resolucionActual >= RESOLUCION_LIMITE_NUCLEOS);
+
+}
+
+document.getElementById("checkNucleos").addEventListener("change", actualizarVisibilidadNucleos);
+mapa.getMapImpl().getView().on("change:resolution", actualizarVisibilidadNucleos);
+actualizarVisibilidadNucleos();
 
 // La ortofoto no es una capa WMS del workspace montija: ya está disponible
 // mediante el selector de fondos del mapa (control "backgroundlayers").

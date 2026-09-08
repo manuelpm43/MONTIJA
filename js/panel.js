@@ -50,6 +50,49 @@ const PESTANAS_FICHA = [
 
 
 /**
+ * Escapa caracteres HTML especiales para poder insertar texto de forma segura.
+ *
+ * @param {string} texto - Texto a escapar.
+ * @returns {string} Texto con los caracteres HTML especiales escapados.
+ */
+function escaparHtml(texto) {
+
+    return texto
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+
+}
+
+
+/**
+ * Da formato a un valor de la ficha: si es una URL, la convierte en un
+ * enlace clicable que abre en una pestaña nueva; en caso contrario, lo
+ * muestra como texto (escapado).
+ *
+ * @param {*} valor - Valor del atributo.
+ * @returns {string} HTML a insertar en la ficha.
+ */
+function formatearValorFicha(valor) {
+
+    if (valor === null || valor === undefined || valor === "") {
+        return "-";
+    }
+
+    const texto = String(valor);
+
+    if (/^https?:\/\/\S+$/i.test(texto)) {
+        const url = escaparHtml(texto);
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    }
+
+    return escaparHtml(texto);
+
+}
+
+
+/**
  * Muestra en la ventana emergente las propiedades de un elemento seleccionado,
  * organizadas en las pestañas LOCALIDAD / CONTADOR / DIRECCION / CATASTRO.
  *
@@ -84,7 +127,7 @@ function mostrarInfoElemento(atributos) {
                     return clave in atributos;
                 })
                 .map(function (clave) {
-                    return `<p><b>${clave}:</b> ${atributos[clave] ?? "-"}</p>`;
+                    return `<p><b>${clave}:</b> ${formatearValorFicha(atributos[clave])}</p>`;
                 })
                 .join("") || "<p>Sin datos.</p>";
 

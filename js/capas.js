@@ -77,5 +77,10 @@ enlazarCheckboxCapa("checkCadastralParcel", capaCadastralParcel);
 enlazarCheckboxCapa("checkNucleos", capaNucleos);
 enlazarCheckboxCapa("checkMunicipios", capaMunicipio);
 
+// NÚCLEOS deja de mostrarse a partir de la escala 1:5000 (zoom mayor, más
+// detalle), independientemente de la casilla: pixel OGC estándar 0.28mm/px,
+// resolución (m/px) = escala * 0.00028.
+capaNucleos.getImpl().getOL3Layer().setMinResolution(5000 * 0.00028);
+
 // La ortofoto no es una capa WMS del workspace montija: ya está disponible
 // mediante el selector de fondos del mapa (control "backgroundlayers").

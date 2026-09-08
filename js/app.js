@@ -109,7 +109,12 @@ const capaDirecciones = new IDEE.layer.WMS({
     useCapabilities: false
 }, {
     crossOrigin: null,
-    visibility: false
+    visibility: false,
+    // Sin teselar: si se pide en teselas de 256x256, GeoServer evita
+    // solapes de etiquetas por separado en cada tesela y, con direcciones
+    // muy próximas entre sí, la mayoría quedan sin ninguna etiqueta hasta
+    // hacer mucho zoom. Pidiendo una sola imagen por vista, las evita bien.
+    tiled: false
 });
 
 const capaContadores = new IDEE.layer.WMS({
